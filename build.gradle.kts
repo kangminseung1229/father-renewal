@@ -33,6 +33,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5")
     implementation("org.modelmapper:modelmapper:3.1.1")
+    implementation ("io.github.microutils:kotlin-logging:3.0.5")
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client")

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+<style>
+
+    td.grey{
+        color : grey;
+    }
+    td.red{
+        color : red;
+    }
+
+    .sel-center{
+        text-align-last: center;
+        text-align: center;
+        -ms-text-align-last: center;
+        -moz-text-align-last: center;
+    }
+
+</style>
+</head>
+
+<header th:replace="fragments/cm_top.html :: header('데이터')"></header>
+
+<body>
+
+    <select class="form-control sel-center" name="year" id="year">
+        <th:block th:each="num : ${#numbers.sequence(2019,2025)}" >
+            <option value="2021" th:value="${num}" th:text="${num}" th:selected="${num} == ${year}"></option>
+        </th:block>
+    </select>
+    <br/>
+    <select class="form-control sel-center" name="month" id="month">
+        <th:block th:each="num : ${#numbers.sequence(1,12)}" >
+            <option th:value="${num}" th:text="${num}" th:selected="${num} == ${month}" >12</option>
+        </th:block>
+    </select>
+    <br/>
+    <br/>
+
+
+    <span class="fs-4" th:text="|${year}년 ${month}월|"></span>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">날짜</th>
+                <th scope="col">입금</th>
+                <th scope="col">매출</th>
+            </tr>
+        </thead>
+        <tbody th:if="${list != null}">
+            <tr th:each=" row : ${list}">
+                <td th:text="${#temporals.format(row.datememo,'dd')}" >11</td>
+                <td><span th:text="${#numbers.formatInteger(row.companyprice, 0, 'COMMA')}">1,000</span></td>
+                <td><span th:text="${#numbers.formatInteger(row.myprice, 0, 'COMMA')}">1,000</span></td>
+            </tr>
+            <tr>
+                <th>합계</th>
+                <th><span th:text="${#numbers.formatInteger(sumCompanyPrice, 0, 'COMMA')}">total</span> 원</th>
+                <th><span th:text="${#numbers.formatInteger(sumMyPrice, 0, 'COMMA')}">total</span> 원</th>
+            </tr>
+        </tbody>
+
+        <tr th:if="${list == null}">
+            <td colspan="3"></td>
+        </tr>
+    </table>
+</body>
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+
+        var target='';
+        var year='';
+        var month='';
+
+        $("input[name='companyprice']").focusout(function(){
+           $(this).val(companypriceToString($(this).val()));
+        });
+
+        $("input[name='companyprice']").focus(function(){
+
+            $(this).val('');
+           $(this).val(companypriceToString($(this).val()));
+        });
+        $("input[name='myprice']").focusout(function(){
+           $(this).val(mypriceToString($(this).val()));
+        });
+
+        $("input[name='myprice']").focus(function(){
+
+            $(this).val('');
+           $(this).val(mypriceToString($(this).val()));
+        });
+
+
+        // select box 연도, 월 변경
+        $("#year").change(function(){
+            year = $("#year").val();
+            month = $("#month").val();
+            location.href="/list?year="+year+"&month="+month;
+        });
+
+        $("#month").change(function(){
+            year = $("#year").val();
+            month = $("#month").val();
+            location.href="/list?year="+year+"&month="+month;
+        });
+    });
+
+    function save(param) {
+
+        var companyprice = $("#companyprice" + param).val()
+
+        $.ajax({
+            type: "post",
+            url: "/companyprice-write",
+            data: {companyprice : companyprice, id : param },
+            dataType: "text",
+            success: function (response) {
+                console.log(response);
+                alert('저장 완료');
+            },error : function (e) {
+                console.log(e);
+              }
+        });
+
+      }
+
+      	//천단위 콤마
+	function companypriceToString(companyprice) {
+	    return companyprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+
+</script>
