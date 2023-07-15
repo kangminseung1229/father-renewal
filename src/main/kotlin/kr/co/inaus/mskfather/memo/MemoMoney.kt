@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor
 import java.time.LocalDate
 
 @Entity
+@NoArgsConstructor
 @EqualsAndHashCode(of = ["id"])
 class MemoMoney(
 
@@ -24,4 +25,4 @@ class MemoMoney(
 
 ){
 }
-data class MemoMoneyDto(val id: Long, val year: Int, val month: Int, val day: Int, val companyPrice: Int, val myPrice: Int )
+data class MemoMoneyDto(val id: Long, val year: Int, val month: Int, val day: Int, val companyPrice: Long, val myPrice: Long )

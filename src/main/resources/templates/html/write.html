@@ -157,21 +157,20 @@
         param : 없음.
     */
     function save() {
-
-        var formData = new FormData();
-        formData.append("id", $("#id").val());
-        formData.append("year", $("#year").val());
-        formData.append("month", $("#month").val());
-        formData.append("day", $("#day").val());
-        formData.append("companyprice", $("#companyprice").val().replaceAll(",",""));
-        formData.append("myprice", $("#myprice").val().replaceAll(",",""));
-
+    var data = {
+        id: $("#id").val(),
+        year: $("#year").val(),
+        month: $("#month").val(),
+        day: $("#day").val(),
+        companyPrice: $("#companyprice").val().replaceAll(",", ""),
+        myPrice: $("#myprice").val().replaceAll(",", "")
+    };
         $.ajax({
             type: "post",
             url: "companyprice-write",
             processData: false,
-            contentType: false,
-            data: formData,
+            contentType: "application/json",
+            data: JSON.stringify(data),
             dataType: "json",
             success: function (response) {
                 alert('저장 완료!');

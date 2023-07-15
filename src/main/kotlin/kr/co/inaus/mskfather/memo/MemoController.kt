@@ -1,10 +1,12 @@
 package kr.co.inaus.mskfather.memo
 
+import org.modelmapper.ModelMapper
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import java.time.LocalDate
@@ -12,7 +14,8 @@ import java.time.LocalDate
 @Controller
 @RequestMapping("/memo")
 class MemoController (
-    val memoMoneyRepository: MemoMoneyRepository
+    val memoMoneyRepository: MemoMoneyRepository,
+    val modelMapper: ModelMapper
 )
 {
 
@@ -51,13 +54,14 @@ class MemoController (
     }
 
     @PostMapping("/companyprice-write")
-    fun companyPriceSave(@RequestParam memoMoneyDto: MemoMoneyDto) : ResponseEntity<MemoMoney> {
+    fun companyPriceSave(@RequestBody memoMoneyDto: MemoMoneyDto) : ResponseEntity<MemoMoney> {
 
+        var newMemoMoney : MemoMoney = modelMapper.map(memoMoneyDto, MemoMoney::class.java)
 
+        newMemoMoney.totalPrice = memoMoneyDto.companyPrice + memoMoneyDto.myPrice
+        newMemoMoney.datememo = LocalDate.now()
 
-
-
-        return ResponseEntity.ok().build()
+        return ResponseEntity.ok().body(memoMoneyRepository.save(newMemoMoney))
     }
 
 
