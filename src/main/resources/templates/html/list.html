@@ -32,7 +32,7 @@
 <body>
 
     <select class="form-control sel-center" name="year" id="year">
-        <th:block th:each="num : ${#numbers.sequence(2019,2025)}" >
+        <th:block th:each="num : ${#numbers.sequence(2019,2027)}" >
             <option value="2021" th:value="${num}" th:text="${num}" th:selected="${num} == ${year}"></option>
         </th:block>
     </select>
@@ -57,7 +57,7 @@
             </tr>
         </thead>
         <tbody th:if="${list != null}">
-            <tr th:each=" row : ${list}">
+            <tr th:each=" row : ${memoMoneyList}">
                 <td th:text="${#temporals.format(row.datememo,'dd')}" >11</td>
                 <td><span th:text="${#numbers.formatInteger(row.companyprice, 0, 'COMMA')}">1,000</span></td>
                 <td><span th:text="${#numbers.formatInteger(row.myprice, 0, 'COMMA')}">1,000</span></td>

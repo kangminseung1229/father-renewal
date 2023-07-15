@@ -4,11 +4,7 @@ import org.modelmapper.ModelMapper
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.*
 import java.time.LocalDate
 
 @Controller
@@ -19,7 +15,31 @@ class MemoController (
 )
 {
 
-    //TODO: log 객체 찾기
+    @GetMapping("list")
+    fun list (model: Model, @RequestParam(defaultValue = "0") year: Int, @RequestParam(defaultValue = "0") month: Int) : String {
+
+        var currentYear : Int = year
+        var currentMonth : Int = month
+        val now: LocalDate = LocalDate.now()
+
+        if (currentYear == 0) currentYear = now.year
+        if (currentMonth == 0) currentMonth = now.monthValue
+
+        var memoMoney : MemoMoney? = memoMoneyRepository.findByDatememo(now)
+
+        val sumMyPrice: Long? = memoMoneyRepository.sumMyPrice(year, month) ?: 0L
+        val sumCompanyPrice: Long? = memoMoneyRepository.sumCompanyPrice(year, month) ?: 0L
+
+        val memoMoneyList: List<MemoMoney> = memoMoneyRepository.findByYearAndMonthOrderByDatememo(year, month)
+
+        model.addAttribute("list", memoMoneyList)
+        model.addAttribute("sumCompanyPrice", sumCompanyPrice)
+        model.addAttribute("sumMyPrice", sumMyPrice)
+        model.addAttribute("year", currentYear)
+        model.addAttribute("month", currentMonth)
+
+        return "html/list"
+    }
 
     @GetMapping("/write")
     fun write(model : Model, @RequestParam(defaultValue = "0") year : Int, @RequestParam(defaultValue = "0") month : Int, @RequestParam(defaultValue = "0") day : Int): String {
@@ -36,14 +56,12 @@ class MemoController (
 
         var targetDate = LocalDate.of(currentYear, currentMonth, currentDay)
 
-        var memoMoney = memoMoneyRepository.findByDatememo(targetDate)
+        var memoMoney: MemoMoney?= memoMoneyRepository.findByDatememo(targetDate)
 
-        if (memoMoney.isPresent){
-            var target = memoMoney.get()
-
-            model.addAttribute("id", target.id)
-            model.addAttribute("companyPrice", target.companyPrice)
-            model.addAttribute("myPrice", target.myPrice)
+        if (memoMoney != null){
+            model.addAttribute("id", memoMoney.id)
+            model.addAttribute("companyPrice", memoMoney.companyPrice)
+            model.addAttribute("myPrice", memoMoney.myPrice)
 
         }
         model.addAttribute("year", currentYear)
@@ -65,20 +83,6 @@ class MemoController (
     }
 
 
-    @GetMapping("/list")
-    fun list (model : Model, @RequestParam(defaultValue = "0") year : Int, @RequestParam(defaultValue = "0") month : Int){
-//
-//        val now = LocalDate.now()
-//
-//        var currentYear : Int
-//        var currentMonth : Int
-//
-//        if (year == 0) currentYear = now.year
-//        if (month == 0) currentYear = now.monthValue
-
-
-
-    }
 
 
 }
