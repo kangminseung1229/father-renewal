@@ -18,10 +18,10 @@ class MemoMoney(
     var id: Long = 0,
     var year: Int = 0,
     var month: Int = 0,
-    var datememo: LocalDate = LocalDate.now(),
-    var companyPrice: Long = 0,
-    var myPrice: Long = 0,
-    var totalPrice: Long = 0
+    var datememo: LocalDate = LocalDate.now(), // 기록 시간
+    var companyPrice: Long = 0, // 매출
+    var myPrice: Long = 0, // 입금
+    var totalPrice: Long = 0 // 합계
 
 ){
 }
