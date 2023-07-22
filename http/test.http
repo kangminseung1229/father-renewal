@@ -1,0 +1,11 @@
+POST http://localhost:8080/bank/insert
+Content-Type: application/json
+
+{
+  "bankDto": {
+    "basePay": "10",
+    "plusPay": "20",
+    "memoPay": "30"
+  }
+}
+

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -32,23 +32,23 @@
 
 
 
-    <form th:action="@{/mypay/insert}" method="post" name="payForm">
+    <form th:action="@{/bank/insert}" method="post" name="payForm" th:object="${bankDto}">
         <div class="alert alert-success text-center" role="alert" onclick="javascript:this.parentNode.submit();">
             추가하기 (클릭)
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon3">기본</span>
-            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="basicpay" th:value="${target?.basePay}">
+            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="basicpay" th:field="*{basePay}">
         </div>
 
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon3">상여</span>
-            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="pluspay" th:value="${targetBank?.plusPay}">
+            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="pluspay" th:field="*{plusPay}">
         </div>
 
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon3">매출</span>
-            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="memopay" th:value="${targetBank?.memoPay}">
+            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="memopay" th:field="*{memoPay}">
         </div>
 
         <input type="hidden" name="id" th:value="${targetBank?.id}">
@@ -65,12 +65,12 @@
                 <th scope="col">매출</th>
             </tr>
         </thead>
-        <tbody th:if="${mypayList != null}">
-            <tr th:each=" row : ${mypayList}" th:onclick="|location.href='/mypay/list?id=${row.id}';|">
-                <td th:text="${#temporals.format(row.paydate,'yyyy-MM')}" >11</td>
-                <td><span th:text="${#numbers.formatInteger(row.basicpay, 0, 'COMMA')}">1,000</span></td>
-                <td><span th:text="${#numbers.formatInteger(row.pluspay, 0, 'COMMA')}">1,000</span></td>
-                <td><span th:text="${#numbers.formatInteger(row.memopay, 0, 'COMMA')}">1,000</span></td>
+        <tbody th:if="${bankList != null}">
+            <tr th:each=" row : ${bankList}" th:onclick="|location.href='/bank/list?id=${row.id}';|">
+                <td th:text="${#temporals.format(row.payDate,'yyyy-MM')}" >11</td>
+                <td><span th:text="${#numbers.formatInteger(row.basePay, 0, 'COMMA')}">1,000</span></td>
+                <td><span th:text="${#numbers.formatInteger(row.plusPay, 0, 'COMMA')}">1,000</span></td>
+                <td><span th:text="${#numbers.formatInteger(row.memoPay, 0, 'COMMA')}">1,000</span></td>
             </tr>
         </tbody>
 
