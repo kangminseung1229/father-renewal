@@ -109,13 +109,13 @@
         $("#year").change(function(){
             year = $("#year").val();
             month = $("#month").val();
-            location.href="/list?year="+year+"&month="+month;
+            location.href="list?year="+year+"&month="+month;
         });
 
         $("#month").change(function(){
             year = $("#year").val();
             month = $("#month").val();
-            location.href="/list?year="+year+"&month="+month;
+            location.href="list?year="+year+"&month="+month;
         });
     });
 
@@ -129,7 +129,6 @@
             data: {companyprice : companyprice, id : param },
             dataType: "text",
             success: function (response) {
-                console.log(response);
                 alert('저장 완료');
             },error : function (e) {
                 console.log(e);
