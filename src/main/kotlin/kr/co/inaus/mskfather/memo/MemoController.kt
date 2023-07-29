@@ -18,19 +18,21 @@ class MemoController (
     @GetMapping("list")
     fun list (model: Model, @RequestParam(defaultValue = "0") year: Int, @RequestParam(defaultValue = "0") month: Int) : String {
 
+        // TODO: 기본 오늘 날짜로 쿼리 조회하기
+
         var currentYear : Int = year
         var currentMonth : Int = month
         val now: LocalDate = LocalDate.now()
 
-        if (currentYear == 0) currentYear = now.year
-        if (currentMonth == 0) currentMonth = now.monthValue
+        if (currentYear.equals(0) || currentYear == 0 ) currentYear = now.year
+        if (currentMonth.equals(0) || currentMonth ==0 ) currentMonth = now.monthValue
 
         var memoMoney : MemoMoney? = memoMoneyRepository.findByDatememo(now)
 
-        val sumMyPrice: Long? = memoMoneyRepository.sumMyPrice(year, month) ?: 0L
-        val sumCompanyPrice: Long? = memoMoneyRepository.sumCompanyPrice(year, month) ?: 0L
+        val sumMyPrice: Long? = memoMoneyRepository.sumMyPrice(currentYear, currentMonth) ?: 0L
+        val sumCompanyPrice: Long? = memoMoneyRepository.sumCompanyPrice(currentYear, currentMonth) ?: 0L
 
-        val memoMoneyList: List<MemoMoney> = memoMoneyRepository.findByYearAndMonthOrderByDatememo(year, month)
+        val memoMoneyList: List<MemoMoney> = memoMoneyRepository.findByYearAndMonthOrderByDatememo(currentYear, currentMonth)
 
         model.addAttribute("list", memoMoneyList)
         model.addAttribute("sumCompanyPrice", sumCompanyPrice)

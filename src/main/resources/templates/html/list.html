@@ -57,10 +57,10 @@
             </tr>
         </thead>
         <tbody th:if="${list != null}">
-            <tr th:each=" row : ${memoMoneyList}">
+            <tr th:each=" row : ${list}">
                 <td th:text="${#temporals.format(row.datememo,'dd')}" >11</td>
-                <td><span th:text="${#numbers.formatInteger(row.companyprice, 0, 'COMMA')}">1,000</span></td>
-                <td><span th:text="${#numbers.formatInteger(row.myprice, 0, 'COMMA')}">1,000</span></td>
+                <td><span th:text="${#numbers.formatInteger(row.companyPrice, 0, 'COMMA')}">1,000</span></td>
+                <td><span th:text="${#numbers.formatInteger(row.myPrice, 0, 'COMMA')}">1,000</span></td>
             </tr>
             <tr>
                 <th>합계</th>
