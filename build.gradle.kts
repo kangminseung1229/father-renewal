@@ -8,6 +8,7 @@ plugins {
     kotlin("plugin.jpa") version "1.8.22"
     kotlin("plugin.allopen") version "1.8.22"
     kotlin("plugin.noarg") version "1.8.22"
+    kotlin("kapt") version "1.8.22"
 }
 
 group = "kr.co.inaus"
@@ -35,7 +36,9 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5")
     implementation("org.modelmapper:modelmapper:3.1.1")
-    implementation ("io.github.microutils:kotlin-logging:3.0.5")
+    implementation("io.github.microutils:kotlin-logging:3.0.5")
+    implementation ("com.querydsl:querydsl-jpa:5.0.0:jakarta")
+    kapt ("com.querydsl:querydsl-apt:5.0.0:jakarta")
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client")

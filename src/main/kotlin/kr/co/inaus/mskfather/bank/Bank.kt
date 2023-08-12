@@ -25,8 +25,11 @@ class Bank(
     @Column(updatable = false)
     var payDate: LocalDate? = null
 
+    var year: String?= null
+
     init {
         sum()
+        year = LocalDate.now().year.toString()
     }
 
     fun sum() {
@@ -36,3 +39,4 @@ class Bank(
 }
 
 data class BankDto (val basePay:Long?, val plusPay: Long?, val memoPay: String?, val id: Long?)
+data class BankYearDto (val year: String, val yearPay: Long)

@@ -52,5 +52,18 @@ class BankController(
     }
 
 
+    @GetMapping("/year-list")
+    fun yearList(model: Model) : String{
+
+        //TODO: 연간매출구하기
+         model.addAttribute("yearList",bankRepository.findYearGroup())
+
+        //TODO: 삭제기능 구하기
+
+
+        return "html/year-list"
+
+    }
+
 
 }
