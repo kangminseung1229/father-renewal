@@ -3,8 +3,7 @@ package kr.co.inaus.mskfather.memo
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
-import java.util.Optional
-import kotlin.jvm.optionals.getOrElse
+import java.util.*
 
 @Service
 @Transactional
@@ -21,5 +20,9 @@ class MemoService(
 
         return targetMemoMoney
 
+    }
+
+    fun deleteMemoMoney(id: Long) {
+        memoMoneyRepository.deleteById(id)
     }
 }
