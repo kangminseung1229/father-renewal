@@ -33,10 +33,9 @@ class Bank(
     }
 
     fun sum() {
-        println("합계가 계산되었습니다.")
         totalPay = basePay + plusPay
     }
 }
 
-data class BankDto (val basePay:Long?, val plusPay: Long?, val memoPay: String?, val id: Long?)
+data class BankDto (val id: Long?, val basePay:Long?, val plusPay: Long?, val memoPay: Long?)
 data class BankYearDto (val year: String, val yearPay: Long)

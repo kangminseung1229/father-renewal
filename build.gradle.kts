@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
     id("org.springframework.boot") version "3.1.1"
@@ -53,8 +54,23 @@ tasks.withType<KotlinCompile> {
     }
 }
 
+//tasks.withType<Copy> {
+//    from("$buildDir/classes/kotlin/main/") // 상대경로로 변경
+//    into("$buildDir/classes/java/main/")   // 상대경로로 변경
+//    duplicatesStrategy = DuplicatesStrategy.INCLUDE // 중복 처리 전략 설정
+//}
+
+tasks.named<BootJar>("bootJar") {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE // 중복 처리 전략 설정
+}
+
+
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.named<ProcessResources>("processResources") {
+    dependsOn(":compileKotlin")
 }
 
 allOpen {

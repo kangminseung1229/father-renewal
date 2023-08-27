@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam
 @RequestMapping("/bank")
 class BankController(
     val bankRepository: BankRepository,
-    val bankService: BankService,
-    val modelMapper: ModelMapper
+    val bankService: BankService
 ) {
+
+    val modelMapper = ModelMapper()
 
     @GetMapping("/list")
     fun list(model: Model, @RequestParam(required = false) id: Long?): String {
@@ -23,7 +24,7 @@ class BankController(
 
         id?.let { nonNullId ->
             bankRepository.findById(nonNullId).ifPresent { bank ->
-                model.addAttribute("bankDto", modelMapper.map(bank, BankDto::class.java))
+                model.addAttribute("bankDto", BankDto(bank.id, bank.basePay, bank.plusPay, bank.memoPay))
             }
         } ?: run {
             model.addAttribute("bankDto", BankDto(null, null, null, null))
