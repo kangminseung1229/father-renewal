@@ -1,25 +1,24 @@
 package kr.co.inaus.mskfather.memo
 
+import org.modelmapper.ModelMapper
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
-import java.util.*
 
 @Service
 @Transactional
 class MemoService(
-    val memoMoneyRepository: MemoMoneyRepository
+    val memoMoneyRepository: MemoMoneyRepository,
+    val modelMapper: ModelMapper
 ) {
 
-    fun saveDatememo(memoMoneyDto : MemoMoneyDto) : Optional<MemoMoney> {
-        val datememo : LocalDate = LocalDate.of(memoMoneyDto.year, memoMoneyDto.month, memoMoneyDto.day)
+    fun saveDatememo(memoMoneyDto: MemoMoneyDto): MemoMoney {
 
-        val ass = MemoMoney()
+        var newMemoMoney: MemoMoney = modelMapper.map(memoMoneyDto, MemoMoney::class.java)
+        newMemoMoney.totalPrice = memoMoneyDto.companyPrice + memoMoneyDto.myPrice
+        newMemoMoney.datememo = LocalDate.now()
 
-        var targetMemoMoney = memoMoneyRepository.findById(memoMoneyDto.id)
-
-        return targetMemoMoney
-
+        return memoMoneyRepository.save(newMemoMoney)
     }
 
     fun deleteMemoMoney(id: Long) {

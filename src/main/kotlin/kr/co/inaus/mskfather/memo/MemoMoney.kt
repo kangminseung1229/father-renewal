@@ -2,7 +2,6 @@ package kr.co.inaus.mskfather.memo
 
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import lombok.EqualsAndHashCode
 import lombok.NoArgsConstructor
@@ -14,7 +13,7 @@ import java.time.LocalDate
 class MemoMoney(
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     var id: Long = 0,
     var year: Int = 0,
     var month: Int = 0,

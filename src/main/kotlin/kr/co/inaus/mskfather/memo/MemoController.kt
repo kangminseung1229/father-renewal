@@ -85,13 +85,7 @@ class MemoController(
 
     @PostMapping("/companyprice-write")
     fun companyPriceSave(@RequestBody memoMoneyDto: MemoMoneyDto): ResponseEntity<MemoMoney> {
-
-        var newMemoMoney: MemoMoney = modelMapper.map(memoMoneyDto, MemoMoney::class.java)
-
-        newMemoMoney.totalPrice = memoMoneyDto.companyPrice + memoMoneyDto.myPrice
-        newMemoMoney.datememo = LocalDate.now()
-
-        return ResponseEntity.ok().body(memoMoneyRepository.save(newMemoMoney))
+        return ResponseEntity.ok().body(memoService.saveDatememo(memoMoneyDto))
     }
 
     @PostMapping("/delete")

@@ -16,7 +16,7 @@ class Bank(
     @Id
     @GeneratedValue
     var id: Long? = null
-    var memoPay: Long = 0 // 메모
+    var memoPay: Long = 0 // 메모, 현금
     var totalPay: Long = 0
         get() = basePay + plusPay
 

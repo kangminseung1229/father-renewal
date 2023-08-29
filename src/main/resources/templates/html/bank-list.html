@@ -47,11 +47,11 @@
         </div>
 
         <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon3">매출</span>
+            <span class="input-group-text" id="basic-addon3">현금</span>
             <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="memopay" th:field="*{memoPay}">
         </div>
 
-        <input type="hidden" name="id" th:value="${targetBank?.id}">
+        <input type="hidden" name="id" th:value="${bankDto?.id}">
     </form>
 
 
