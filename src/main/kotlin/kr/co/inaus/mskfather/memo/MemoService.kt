@@ -16,7 +16,7 @@ class MemoService(
 
         var newMemoMoney: MemoMoney = modelMapper.map(memoMoneyDto, MemoMoney::class.java)
         newMemoMoney.totalPrice = memoMoneyDto.companyPrice + memoMoneyDto.myPrice
-        newMemoMoney.datememo = LocalDate.now()
+        newMemoMoney.datememo = LocalDate.of(memoMoneyDto.year, memoMoneyDto.month, memoMoneyDto.day)
 
         return memoMoneyRepository.save(newMemoMoney)
     }
