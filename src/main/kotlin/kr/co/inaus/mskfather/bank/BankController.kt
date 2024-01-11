@@ -30,7 +30,7 @@ class BankController(
             model.addAttribute("bankDto", BankDto(null, null, null, null))
         }
 
-        val bankList: List<Bank> = bankRepository.findAll(Sort.by(Sort.Direction.DESC, "id"))
+        val bankList: List<Bank> = bankRepository.findAll(Sort.by(Sort.Direction.DESC, "payDate"))
         model.addAttribute("bankList", bankList)
 
         return "html/bank-list"
