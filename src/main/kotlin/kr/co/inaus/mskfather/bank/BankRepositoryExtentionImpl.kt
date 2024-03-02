@@ -15,7 +15,7 @@ class BankRepositoryExtentionImpl(
                 Projections.constructor(
                     BankYearDto::class.java,
                     bank.year,
-                    bank.basePay.sum().add(bank.plusPay.sum()).add(bank.totalPay.sum())
+                    bank.totalPay.sum()
                 )
             )
             .from(bank)
