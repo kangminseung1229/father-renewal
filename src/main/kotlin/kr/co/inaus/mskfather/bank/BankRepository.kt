@@ -7,4 +7,6 @@ import java.util.*
 interface BankRepository: JpaRepository<Bank, Long>, BankRepositoryExtention {
 
     fun findFirstByYearAndMonth(year: String?, month: String?): Optional<Bank>
+
+    fun findAllByOrderByYearDescMonthDesc(): List<Bank>
 }

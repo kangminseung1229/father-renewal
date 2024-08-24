@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import java.time.LocalDate
 import java.time.Year
+import java.util.stream.Collectors
 
 
 @Controller
@@ -35,12 +36,10 @@ class BankController(
         }
 
 
+        model.addAttribute("bankList", bankService.getSortedBanks())
+
         val currentYear = Year.now().value
         model.addAttribute("currentYear", currentYear)
-
-
-        val bankList: List<Bank> = bankRepository.findAll(Sort.by(Sort.Direction.DESC, "payDate"))
-        model.addAttribute("bankList", bankList)
 
         return "html/bank-list"
     }

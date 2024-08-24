@@ -32,4 +32,22 @@ class BankService (
             bankRepository.save(newData)
         }
     }
+
+
+    fun getSortedBanks(): List<BankDto> {
+        val banks: List<Bank> = bankRepository.findAll()
+
+        return banks.sortedWith(compareByDescending<Bank> { it.year?.toInt() }
+            .thenByDescending { it.month?.toInt() })
+            .map { bank ->
+                BankDto(
+                    id = bank.id,
+                    basePay = bank.basePay,
+                    plusPay = bank.plusPay,
+                    memoPay = bank.memoPay,
+                    year = bank.year,
+                    month = bank.month
+                )
+            }
+    }
 }
