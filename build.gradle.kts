@@ -19,6 +19,7 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
 }
 
+
 configurations {
     compileOnly {
         extendsFrom(configurations.annotationProcessor.get())
@@ -38,8 +39,9 @@ dependencies {
     implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5")
     implementation("org.modelmapper:modelmapper:3.1.1")
     implementation("io.github.microutils:kotlin-logging:3.0.5")
-    implementation ("com.querydsl:querydsl-jpa:5.0.0:jakarta")
-    kapt ("com.querydsl:querydsl-apt:5.0.0:jakarta")
+    implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client")

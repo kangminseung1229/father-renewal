@@ -5,21 +5,14 @@ import com.querydsl.jpa.impl.JPAQueryFactory
 
 
 class BankRepositoryExtentionImpl(
-    val jpaQueryFactory: JPAQueryFactory,
-    val bank: QBank = QBank.bank
+    val jpaQueryFactory: JPAQueryFactory, val bank: QBank = QBank.bank
 ) : BankRepositoryExtention {
     override fun findYearGroup(): List<BankYearDto> {
 
-        return jpaQueryFactory
-            .select(
+        return jpaQueryFactory.select(
                 Projections.constructor(
-                    BankYearDto::class.java,
-                    bank.year,
-                    bank.totalPay.sum()
+                    BankYearDto::class.java, bank.year, bank.totalPay.sum()
                 )
-            )
-            .from(bank)
-            .groupBy(bank.year)
-            .fetch()
+            ).from(bank).groupBy(bank.year).fetch()
     }
 }
